@@ -1,14 +1,14 @@
 import { useState } from "react";
 import {
   AiFillDelete,
-  AiFillEdit,
+  // AiFillEdit,
   AiOutlineClose,
   AiOutlinePlus,
 } from "react-icons/ai";
 import { TodoType } from "../types/todoType";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { deleteTodo, updateTodo } from "../api/todoApi";
+import {updateTodo } from "../api/todoApi";
 
 type todoItemType = {
   todoItem: TodoType;
@@ -19,7 +19,6 @@ type todoItemType = {
 
 export const TodoItem = ({
   todoItem,
-  onUpdate,
   onStatusUpdate,
   onDelete,
 }: todoItemType) => {
@@ -35,10 +34,10 @@ export const TodoItem = ({
         .max(30, "Must be 30 characters or less")
         .required(),
     }),
-    onSubmit: async (values, actions) => {
+    onSubmit: async (values) => {
       console.log(`values:: ${values}`);
       try {
-        const res = await updateTodo(values.id, values);
+        await updateTodo(values.id, values);
       } catch (err) {
         console.log(`error updating todo`);
       }
@@ -48,17 +47,6 @@ export const TodoItem = ({
   // input value change event
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoUpdateTask(e.target.value);
-  };
-
-  // update
-  const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (todoUpdateTask.trim().length === 0) {
-      window.alert("Please enter your details");
-      return;
-    }
-    onUpdate({ ...todoItem, task: todoUpdateTask });
-    setEdit(false);
   };
 
   const handleStatusUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,14 +88,14 @@ export const TodoItem = ({
         </form>
       ) : (
         <>
-          {/* <input
+          {false && <input
             type="checkbox"
             name={id}
             id={id}
             checked={status === "completed"}
             onChange={handleStatusUpdate}
             className="peer/checked appearance-none w-5 h-5  border-blue-500 rounded-md bg-white mt-1 shrink-0 checked:bg-blue-800 checked:border-0"
-          /> */}
+          />}
           <label
             htmlFor={id}
             className="flex-auto shrink-0 pl-2 checked:line-through peer-checked/checked:text-slate-300 peer-checked/checked:line-through"
