@@ -1,8 +1,8 @@
 {
   "name": "to-do-app",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
-  "homepage": ".",
+  "homepage": "https://AsonJtsz.github.io/todo-frontend",
   "type": "module",
   "scripts": {
     "dev": "vite",
